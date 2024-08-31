@@ -1,0 +1,12 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.apartments {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.apartments article {
+    max-width: 400px;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <!-- Indica que hacemos la petición GET a la raíz del servidor -->
+    <link rel="stylesheet" href="/styles.css">
+
+</head>
+
+<body>
+    <h1>Home Page</h1>
+    <!-- Paso 1 BUSCAR: Añadir un formulario para realizar la búsqueda por precio máximo. este <form> que valor tiene el atributo method? GET . Qué valor tendrá el atributo "action"? /search -->
+    <form class="container" action="/search">
+        <label for="maxPrice">Precio máximo por noche</label>
+        <input type="number" name="maxPrice" id="maxPrice" min="0" max="1000000">
+        <input type="submit" value="Filtrar">
+    </form>
+
+    <main class="container apartments">
+
+        <% for (const ap of apartments) { %>
+            <a href="/apartment/<%= ap._id %>">
+                <article class="apartment">
+                    <header>
+                        <%= ap.title %>
+                    </header>
+                    <div><img src="<%= ap.mainPhoto %>" alt=""></div>
+                    <footer>
+                        <%= ap.price %> € por noche
+                    </footer>
+                </article>
+            </a>
+            <% } %>
+    </main>
+</body>
+
+</html>

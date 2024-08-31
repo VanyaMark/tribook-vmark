@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del apartamento</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+    <article class="container">
+        <h1><%= selectedApartment.title %></h1>
+        <header> <del style="color: rgb(190, 182, 182)"><%= selectedApartment.price %></del> 
+            <%= selectedApartment.price * 0.9 %> € por noche</header>
+        <img src="<%= selectedApartment.mainPhoto %>" alt="">
+        <div><%= selectedApartment.description %></div>
+        <footer><%= selectedApartment.size %> m<sup>2</sup></footer>
+    </article>
+</body>
+
+</html>
