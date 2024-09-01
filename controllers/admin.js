@@ -17,7 +17,7 @@ const postNewApartment = async (req, res) => {
         description: req.body.description,
         price: req.body.price,
         size: req.body.size,
-        mainPhoto: req.body.mainPhoto
+        mainPhoto: req.body.mainPhoto,
     });
 
     res.send('Apartamaneto creado');

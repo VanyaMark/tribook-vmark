@@ -23,17 +23,11 @@ const apartmentSchema = new Schema({
         type: String,
         required: true,
     },
-    services: {
-        // array de strings 
-        // ["wifi", "air aconditionar"]
-        // objeto con los servicios { wifi: true, airConditioner: false}
-        wifi: Boolean,
-        airConditioner: Boolean,
-        kitchen: Boolean,
-        disability: Boolean,
-        heater: Boolean,
-        tv: Boolean
-    },
+    services: [{
+        label: String,
+        isPresent: Boolean,
+        icon: String
+    }],
     // services: {
     //     type: [String], // enum
     //     validate: {
