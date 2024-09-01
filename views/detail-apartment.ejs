@@ -7,13 +7,48 @@
 </head>
 
 <body>
-    <article class="container">
+    <article class="container apartment-details-container">
         <h1><%= selectedApartment.title %></h1>
         <header> <del style="color: rgb(190, 182, 182)"><%= selectedApartment.price %></del> 
             <%= selectedApartment.price * 0.9 %> € por noche</header>
         <img src="<%= selectedApartment.mainPhoto %>" alt="">
-        <div><%= selectedApartment.description %></div>
-        <footer><%= selectedApartment.size %> m<sup>2</sup></footer>
+        <div class="apartment-detail-grid">
+        <div class="apartment-detail-description"><%= selectedApartment.description %></div>
+        <div class="apartment-detail-services">
+            <% selectedApartment.services.forEach(service => { %>
+                <% if (service.isPresent && service.id == 'wifi') { %>
+                   <i class="fa-solid fa-wifi"></i>
+                <% } else if (service.isPresent && service.id == 'airConditioner') { %>
+                   <i class="fa-solid fa-temperature-low"></i>
+               <% } else if (service.isPresent && service.id == 'kitchen') { %>
+                   <i class="fa-solid fa-utensils"></i>
+               <% } else if (service.isPresent && service.id == 'disabilityAccess') { %>
+                   <i class="fa-brands fa-accessible-icon"></i>
+               <% } else if (service.isPresent && service.id == 'heating') { %>
+                   <i class="fa-solid fa-fire-burner"></i>
+               <% } else if (service.isPresent && service.id == 'tv') { %>
+                   <i class="fa-solid fa-tv"></i>
+                <% } %>
+            <% }) %>
+        </div>
+        
+            <div class="apartment-detail-item">
+                <span class="label">Espacio útil:</span>
+                <span class="value"><%= selectedApartment.size %> m<sup>2</sup></span>
+            </div>
+            <div class="apartment-detail-item">
+                <span class="label">Capacidad huéspedes:</span>
+                <span class="value"> <%= selectedApartment.guests %></span>
+            </div>
+            <div class="apartment-detail-item">
+                <span class="label">Habitaciones:</span>
+                <span class="value"><%= selectedApartment.rooms %></span>
+            </div>
+            <div class="apartment-detail-item">
+                <span class="label">Baños:</span>
+                <span class="value"><%= selectedApartment.bathrooms %></span>
+            </div>
+        </div>
     </article>
 </body>
 

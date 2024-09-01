@@ -38,3 +38,59 @@ a:active {
 a:focus {
     --pico-text-decoration: none;
 }
+
+/* Styles for Apartment Details View */
+
+.apartment-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.apartment-detail-grid {
+    display: grid;
+    grid-template-rows: auto auto repeat(auto-fit, minmax(200px, 1fr)); /* Define rows */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+    gap: 10px; /* Space between items */
+    max-width: 600px; /* Max width for the grid container */
+    margin: auto; /* Center the grid container */
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.apartment-detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f1f1f1; /* Background color for items */
+    border-radius: 4px; /* Rounded corners for items */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for items */
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+.value {
+    color: #666;
+}
+
+.apartment-detail-description {
+    grid-column: 1 / -1; /* Span across all columns */
+    padding: 10px;
+}
+
+.apartment-detail-services {
+    grid-column: 1 / -1; /* Span across all columns */
+    padding: 10px;
+    background: #e8f5e9; /* Background color for services */
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for services */
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 2rem;
+}

@@ -8,25 +8,25 @@
 </head>
 
 <body>
-    <h1>Add New Apartment</h1>
+    <h1>Edit Apartment</h1>
     <main class="container">
-        <form action="/admin/apartment/new-apartment" method="POST">
+        <form action="/admin/apartment/<%= selectedApartment._id %>/edit" method="POST">
             <label for="title">Título</label>
-            <input type="text" name="title" id="title" required maxlength="30">
+            <input type="text" name="title" id="title" required maxlength="30" value="<%= selectedApartment.title %>">
             <label for="description">Descripción</label>
-            <textarea rows="5" name="description" id="description"></textarea>
+            <textarea rows="5" name="description" id="description" placeholder="<%= selectedApartment.description %>"></textarea>
             <label for="price">Precio por noche</label>
-            <input type="number" name="price" id="price" required min="0">
+            <input type="number" name="price" id="price" required min="0" value="<%= selectedApartment.price %>">
             <label for="size">M <sup>2</sup></label>
-            <input type="number" name="size" id="size" required min="0">
+            <input type="number" name="size" id="size" required min="0" value="<%= selectedApartment.size %>">
             <label for="rooms">Habitaciones</label>
-            <input type="number" name="rooms" id="rooms" required min="1" max="10">
+            <input type="number" name="rooms" id="rooms" required min="1" max="10" value="<%= selectedApartment.rooms %>">
             <label for="bathrooms">Baños</label>
-            <input type="number" name="bathrooms" id="bathrooms" required min="1" max="10">
+            <input type="number" name="bathrooms" id="bathrooms" required min="1" max="10" value="<%= selectedApartment.bathrooms %>">
             <label for="guests">Máximo huéspedes</label>
-            <input type="number" name="guests" id="guests" required min="1" max="30">
+            <input type="number" name="guests" id="guests" required min="1" max="30" value="<%= selectedApartment.guests %>">
             <label for="mainPhoto">Foto principal</label>
-            <input type="url" name="mainPhoto" id="mainPhoto" required>
+            <input type="url" name="mainPhoto" id="mainPhoto" required value="<%= selectedApartment.mainPhoto %>">
             <ul>
                 <li>
                     <input id="wifi" name="services" type="checkbox" value="Wi-Fi">
@@ -52,7 +52,7 @@
                     <input id="tv" name="services" type="checkbox" value="Televisión">
                     <label for="tv">Televisión</label>
                 </li>
-            <input type="submit" value="Añadir nuevo">
+            <input type="submit" value="Editar">
         </form>
     </main>
 </body>

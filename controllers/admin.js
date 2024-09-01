@@ -13,7 +13,7 @@ const postNewApartment = async (req, res) => {
     // Me han metido más servicios en el req.services que los servicios que yo quiero? kitchen, wifi, etc. res.status(400).send('Ha ocurrido un error');
     //Create an array to hold the available services for the appartment
     //const checkedServices = req.body.services;
-    const {title, description, price, size, mainPhoto, services} = req.body;
+    const {title, description, price, size, rooms, bathrooms, guests, mainPhoto, services} = req.body;
     //Creates an array that contains all services
     const allServices = [
         { id: 'wifi', label: 'Wi-Fi', isPresent: false},
@@ -23,8 +23,6 @@ const postNewApartment = async (req, res) => {
         { id: 'heating' , label: 'Calefacción', isPresent: false},
         { id: 'tv', label: 'Televisión', isPresent:false }
     ];
-
-
 
     //Additional function to manage services in case of no services present
     const checkServices = (services) => {
@@ -43,21 +41,43 @@ const postNewApartment = async (req, res) => {
         }
     }
 
-
     await Apartment.create({
         title,
         description,
         price,
         size,
+        rooms,
+        bathrooms,
+        guests,
         mainPhoto,
         services: checkServices(services),
     });
     res.send('Apartamaneto creado');
 }
 
+//Get route to edit appartment
+
+const getApartmentByIdEdit = async (req, res) => {
+    const { idApartment } = req.params;
+    const selectedApartment = await Apartment.findById(idApartment)
+    console.log('req', req.params)
+    console.log(selectedApartment)
+    res.render('apartment-edit', {
+        selectedApartment
+    })
+}
+//Post route to edit appartment
+
+const postApartmentByIdEdit = async (req, res) => {
+    const { id } = req.params;
+
+}
+
 // named exports (expotamos varios recursos, lo hacemos como un objeto)
 module.exports = {
     getNewApartmentForm,
-    postNewApartment
+    postNewApartment,
+    getApartmentByIdEdit,
+    postApartmentByIdEdit
 }
 

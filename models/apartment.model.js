@@ -37,6 +37,12 @@ const apartmentSchema = new Schema({
     guests: {
         type: Number,
         min: 1,
+        max: 30,
+        required: true,
+    },
+    bathrooms: {
+        type: Number,
+        min: 1,
         max: 10,
         required: true,
     }
