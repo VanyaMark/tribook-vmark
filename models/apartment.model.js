@@ -24,19 +24,22 @@ const apartmentSchema = new Schema({
         required: true,
     },
     services: [{
+        id: String,
         label: String,
         isPresent: Boolean,
-        icon: String
     }],
-    // services: {
-    //     type: [String], // enum
-    //     validate: {
-    //         validator: function (v) {
-    //             return "Devuelve false si el valor 'v' a insertar no es Wifi o Kitchem o Air conditionating bla bla"
-    //         },
-    //         message: props => `${props.value} is not a valid service!`
-    //     },
-    // }
+    rooms: {
+        type: Number,
+        min: 1,
+        max: 10,
+        required: true,
+    },
+    guests: {
+        type: Number,
+        min: 1,
+        max: 10,
+        required: true,
+    }
 
 });
 

@@ -10,3 +10,31 @@ body {
 .apartments article {
     max-width: 400px;
 }
+
+ul li {
+    list-style-type: none;
+}
+
+a {
+    --pico-text-decoration: none; 
+}
+
+a:link {
+    --pico-text-decoration: none; 
+}
+
+a:visited {
+    --pico-text-decoration: none;
+}
+
+a:hover {
+    --pico-text-decoration: none;
+}
+
+a:active {
+    --pico-text-decoration: none;
+}
+
+a:focus {
+    --pico-text-decoration: none;
+}

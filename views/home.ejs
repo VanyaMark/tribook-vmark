@@ -24,8 +24,25 @@
                         <%= ap.title %>
                     </header>
                     <div><img src="<%= ap.mainPhoto %>" alt=""></div>
-                    <footer>
+                    <div>
                         <%= ap.price %> € por noche
+                    </div>
+                    <footer>
+                        <% ap.services.forEach(service => { %>
+                         <% if (service.isPresent && service.id == 'wifi') { %>
+                            <i class="fa-solid fa-wifi"></i>
+                         <% } else if (service.isPresent && service.id == 'airConditioner') { %>
+                            <i class="fa-solid fa-temperature-low"></i>
+                        <% } else if (service.isPresent && service.id == 'kitchen') { %>
+                            <i class="fa-solid fa-utensils"></i>
+                        <% } else if (service.isPresent && service.id == 'disabilityAccess') { %>
+                            <i class="fa-brands fa-accessible-icon"></i>
+                        <% } else if (service.isPresent && service.id == 'heating') { %>
+                            <i class="fa-solid fa-fire-burner"></i>
+                        <% } else if (service.isPresent && service.id == 'tv') { %>
+                            <i class="fa-solid fa-tv"></i>
+                         <% } %>
+                        <% }) %>
                     </footer>
                 </article>
             </a>
