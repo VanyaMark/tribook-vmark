@@ -69,7 +69,9 @@ const getApartmentByIdEdit = async (req, res) => {
 //Post route to edit appartment
 
 const postApartmentByIdEdit = async (req, res) => {
-    const { id } = req.params;
+    const { idApartment } = req.params;
+
+    await Apartment.findByIdAndUpdate()
 
 }
 
