@@ -1,19 +1,5 @@
 // importar el modelo
 const Apartment = require('../models/apartment.model.js');
-
-const getNewApartmentForm = (req, res) => {
-
-    // Obtener todos los apartmentos de la base de datos
-    const apartments = Apartment.find();
-    res.render('new-apartment.ejs')
-}
-
-const postNewApartment = async (req, res) => {
-
-    // Me han metido más servicios en el req.services que los servicios que yo quiero? kitchen, wifi, etc. res.status(400).send('Ha ocurrido un error');
-    //Create an array to hold the available services for the appartment
-    //const checkedServices = req.body.services;
-    const {title, description, price, size, rooms, bathrooms, guests, mainPhoto, services} = req.body;
     //Creates an array that contains all services
     const allServices = [
         { id: 'wifi', label: 'Wi-Fi', isPresent: false},
@@ -40,6 +26,22 @@ const postNewApartment = async (req, res) => {
             return checkedServices;
         }
     }
+
+const getNewApartmentForm = (req, res) => {
+
+    // Obtener todos los apartmentos de la base de datos
+    const apartments = Apartment.find();
+    res.render('new-apartment.ejs')
+}
+
+const postNewApartment = async (req, res) => {
+
+    // Me han metido más servicios en el req.services que los servicios que yo quiero? kitchen, wifi, etc. res.status(400).send('Ha ocurrido un error');
+    //Create an array to hold the available services for the appartment
+    //const checkedServices = req.body.services;
+    const {title, description, price, size, rooms, bathrooms, guests, mainPhoto, services} = req.body;
+
+
 
     await Apartment.create({
         title,
@@ -70,8 +72,22 @@ const getApartmentByIdEdit = async (req, res) => {
 
 const postApartmentByIdEdit = async (req, res) => {
     const { idApartment } = req.params;
+    console.log('id from post: ', idApartment);
+    const {title, description, price, size, rooms, bathrooms, guests, mainPhoto, services} = req.body;
 
-    await Apartment.findByIdAndUpdate()
+    const updatedApartment = await Apartment.findByIdAndUpdate(idApartment, {
+        title,
+        description,
+        price,
+        size,
+        rooms,
+        bathrooms,
+        guests,
+        mainPhoto,
+        services: checkServices(services),
+    })
+    console.log('updated apartment: ', updatedApartment);
+    res.send('Apartment updated')
 
 }
 

@@ -49,7 +49,7 @@
                     <label for="heating">Calefacción</label>
                 </li>
                 <li>
-                    <input id="tv" name="services" type="checkbox" value="Televisión">
+                    <input id="tv" name="services" type="checkbox" value="Televisión" <%= selectedApartment.services[5].isPresent ? 'checked' : ''%>>
                     <label for="tv">Televisión</label>
                 </li>
             <input type="submit" value="Editar">
