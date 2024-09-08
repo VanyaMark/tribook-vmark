@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 min: `<%= new Date(reservation.startDate).toLocaleDateString() %>`,
                 max: `<%= new Date(reservation.endDate).toLocaleDateString() %>`,
                 disabled: [`<%= 
-    ('0' + new Date(reservation.startDate).getDate()).slice(-2) + '-' +
+    new Date(reservation.startDate).getFullYear() + '-' +
     ('0' + (new Date(reservation.startDate).getMonth() + 1)).slice(-2) + '-' +
-    new Date(reservation.startDate).getFullYear() + ':' +
-    ('0' + new Date(reservation.endDate).getDate()).slice(-2) + '-' +
+    ('0' + new Date(reservation.startDate).getDate()).slice(-2) + ':' +
+    new Date(reservation.endDate).getFullYear() + '-' +
     ('0' + (new Date(reservation.endDate).getMonth() + 1)).slice(-2) + '-' +
-    new Date(reservation.endDate).getFullYear() 
+    ('0' + new Date(reservation.endDate).getDate()).slice(-2)
 %>`],
             },
             // selected: {
@@ -45,12 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     };
     console.log(`<%= 
-    ('0' + new Date(reservation.startDate).getDate()).slice(-2) + '-' +
+    new Date(reservation.startDate).getFullYear() + '-' +
     ('0' + (new Date(reservation.startDate).getMonth() + 1)).slice(-2) + '-' +
-    new Date(reservation.startDate).getFullYear() + ':' +
-    ('0' + new Date(reservation.endDate).getDate()).slice(-2) + '-' +
+    ('0' + new Date(reservation.startDate).getDate()).slice(-2) + ':' +
+    new Date(reservation.endDate).getFullYear() + '-' +
     ('0' + (new Date(reservation.endDate).getMonth() + 1)).slice(-2) + '-' +
-    new Date(reservation.endDate).getFullYear() 
+    ('0' + new Date(reservation.endDate).getDate()).slice(-2)
 %>`)
 
     // Initialize Vanilla Calendar
