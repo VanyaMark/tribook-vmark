@@ -94,3 +94,35 @@ a:focus {
     justify-content: space-around;
     padding: 0.5rem 2rem;
 }
+
+/* Reservation Form */
+.apartment-details-reservation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.apartment-details-reservation-container img, .apartment-details-reservation-container div {
+    width: 100%;
+}
+.reservation-form  {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between items */
+    max-width: 600px; /* Max width for the grid container */
+    margin: 1rem auto auto auto; /* Center the grid container */
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Error Handling */
+.error {
+    background-color: rgb(199, 121, 121);
+    padding: 1rem 0.5rem;
+    border-radius: 5px;
+    width: 60vw;
+    margin: 0 auto;
+}

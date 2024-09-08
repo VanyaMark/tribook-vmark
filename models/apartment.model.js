@@ -46,8 +46,11 @@ const apartmentSchema = new Schema({
         max: 10,
         required: true,
     }
-
-});
+},
+{ 
+    timestamps: true
+  }
+);
 
 const Apartment = model('Apartment', apartmentSchema);
 

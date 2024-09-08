@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const path = require('path'); 
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -44,6 +45,9 @@ app.use((req, res, next) => {
 
 // Añadimos el middleware necesario para que el client puedo hacer peticiones GET a los recursos públicos de la carpeta 'public'
 app.use(express.static('public'));
+
+// Serve static files from node_modules (for Vanilla Calendar)
+app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 const PORT = process.env.PORT || 3000;
 

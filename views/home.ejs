@@ -8,7 +8,9 @@
 
 <body>
     <h1>Home Page</h1>
+
     <% if (isAdmin) { %>
+        <p> <a href="/admin/apartment/new-apartment">Añadir nuevo apartamento</a></p>
         <p><a class="button-logout" href="/logout">Logout</a></p>
         <% } else { %>
             <p><a class="button-logout" href="/login">Login</a></p>

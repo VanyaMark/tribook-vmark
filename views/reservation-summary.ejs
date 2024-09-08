@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Resumen de Reserva</title>
+    <!-- Link to Vanilla Calendar CSS from node_modules -->
+    <link rel="stylesheet" href="/static/vanilla-calendar-pro/build/vanilla-calendar.min.css">
+    <%- include('./partials/head') %>
+
+
+</head>
+<body>
+    <article>
+        <header>Reserva <%= reservation._id %> hecha con éxito</header>
+        <p>Email de la reserva: <%= reservation.email %>        </p>
+        <p>Fecha de entrada: <%= new Date(reservation.startDate).toLocaleDateString() %></p>
+        <p>Fecha de salida: <%= new Date(reservation.endDate).toLocaleDateString() %></p>
+        
+         <!-- Calendar container -->
+         <div id="calendar"></div>
+
+         <!-- Include Vanilla Calendar JS -->
+         <script src="/static/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
+         <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const options = {
+        settings: {
+            range: {
+                min: `<%= new Date(reservation.startDate).toLocaleDateString() %>`,
+                max: `<%= new Date(reservation.endDate).toLocaleDateString() %>`,
+                disabled: [`<%= 
+    ('0' + new Date(reservation.startDate).getDate()).slice(-2) + '-' +
+    ('0' + (new Date(reservation.startDate).getMonth() + 1)).slice(-2) + '-' +
+    new Date(reservation.startDate).getFullYear() + ':' +
+    ('0' + new Date(reservation.endDate).getDate()).slice(-2) + '-' +
+    ('0' + (new Date(reservation.endDate).getMonth() + 1)).slice(-2) + '-' +
+    new Date(reservation.endDate).getFullYear() 
+%>`],
+            },
+            // selected: {
+            //     year: 2022,
+            //     month: 7,
+            // },
+
+        },
+    };
+    console.log(`<%= 
+    ('0' + new Date(reservation.startDate).getDate()).slice(-2) + '-' +
+    ('0' + (new Date(reservation.startDate).getMonth() + 1)).slice(-2) + '-' +
+    new Date(reservation.startDate).getFullYear() + ':' +
+    ('0' + new Date(reservation.endDate).getDate()).slice(-2) + '-' +
+    ('0' + (new Date(reservation.endDate).getMonth() + 1)).slice(-2) + '-' +
+    new Date(reservation.endDate).getFullYear() 
+%>`)
+
+    // Initialize Vanilla Calendar
+    const calendar = new VanillaCalendar('#calendar', options);
+    calendar.init();
+});
+         </script>
+         <footer><%= selectedApartment.title %></footer>
+      </article>
+</body>
