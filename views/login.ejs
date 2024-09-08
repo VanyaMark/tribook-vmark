@@ -1,0 +1,30 @@
+{{!-- views/auth/login.hbs --}}
+<div class="inner-body-div">
+  <div>
+    <h2>Login</h2>
+
+    <form action="/user" method="POST">
+
+      <label> Email:</label>
+        <input class="form-control" type="email" name="email" placeholder="rockstar@ironhack.com" />
+   
+      <label>Password:</label>
+        <input class="form-control" type="password" name="password" placeholder="********" /><br>
+      
+      <button class="btn btn-primary form-control" type="submit">Login</button><br>
+
+      {{#if errorMessage}}
+      <p class="error form-control mt-2">{{errorMessage}}</p>
+      {{/if}}
+    </form>
+  </div><br><br>
+
+  <a class="button-b-link" href="/forgotPassword"> >>Forgot Password</a><br><br>
+</div>
+
+<div>
+
+  {{>buttonsPartial}}
+
+</div>
+<!--buttons-->
