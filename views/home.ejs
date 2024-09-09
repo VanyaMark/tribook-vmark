@@ -7,15 +7,10 @@
 </head>
 
 <body>
+    <%- include('./partials/navbar.ejs') %>
     <h1>Home Page</h1>
 
-    <% if (isAdmin) { %>
-        <p> <a href="/admin/apartment/new-apartment">Añadir nuevo apartamento</a></p>
-        <p><a class="button-logout" href="/logout">Logout</a></p>
-        <% } else { %>
-            <p><a class="button-logout" href="/login">Login</a></p>
 
-            <% } %>
     <!-- Paso 1 BUSCAR: Añadir un formulario para realizar la búsqueda por precio máximo. este <form> que valor tiene el atributo method? GET . Qué valor tendrá el atributo "action"? /search -->
     <form class="container" action="/search">
         <label for="maxPrice">Precio máximo por noche</label>

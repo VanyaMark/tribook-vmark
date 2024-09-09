@@ -2,6 +2,21 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/* Navbar */
+nav {
+    background-color: #0172ae;
+    padding: 5px 5px;
+}
+
+.button-logout {
+    color: white;
+}
+
+.buttons-login-signup {
+    display: flex;
+    gap: 1rem;
+}
+
 .apartments {
     display: flex;
     flex-wrap: wrap;

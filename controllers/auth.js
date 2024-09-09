@@ -2,13 +2,14 @@ const USERNAME = "admin";
 const PASSWORD = "admin";
 
 const getLoginForm = (req, res) => {
-    res.send(`
-        <form method="POST" action="/login">
-            <input type="text" name="username" placeholder="Usuario" required />
-            <input type="password" name="password" placeholder="Contraseña" required />
-            <button type="submit">Iniciar sesión</button>
-        </form>
-    `);
+    // res.send(`
+    //     <form method="POST" action="/login">
+    //         <input type="text" name="username" placeholder="Usuario" required />
+    //         <input type="password" name="password" placeholder="Contraseña" required />
+    //         <button type="submit">Iniciar sesión</button>
+    //     </form>
+    // `);
+    res.render('login')
 }
 
 const postLoginForm = (req, res) => {
