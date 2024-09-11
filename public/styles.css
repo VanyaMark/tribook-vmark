@@ -2,6 +2,12 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: cecnter;
+}
+
 /* Navbar */
 nav {
     background-color: #0172ae;
@@ -20,6 +26,9 @@ nav {
 .apartments {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
 }
 
 .apartments article {

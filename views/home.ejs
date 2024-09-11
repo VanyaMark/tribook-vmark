@@ -3,64 +3,70 @@
 
 <head>
     <%- include('./partials/head') %>
-    <title>Tribook Home</title>
+        <title>Tribook Home</title>
 </head>
 
 <body>
     <%- include('./partials/navbar.ejs') %>
-    <h1>Home Page</h1>
+        <h1>Home Page</h1>
 
-    <!-- Flash Messages -->
-     <% if (successMsg.length > 0) { %>
-        <div class="alert alert-success">
-            <%= successMsg %>
-        </div>
-        <% } %>
-    <% if (errorMsg.length > 0) { %>
-        <div class="alert alert-error">
-            <%= errorMsg %>
-        </div>
-        <% } %>
-    <!-- Paso 1 BUSCAR: Añadir un formulario para realizar la búsqueda por precio máximo. este <form> que valor tiene el atributo method? GET . Qué valor tendrá el atributo "action"? /search -->
-    <form class="container" action="/search">
-        <label for="maxPrice">Precio máximo por noche</label>
-        <input type="number" name="maxPrice" id="maxPrice" min="0" max="1000000">
-        <input type="submit" value="Filtrar">
-    </form>
-
-    <main class="container apartments">
-
-        <% for (const ap of apartments) { %>
-            <a href="/apartment/<%= ap._id %>">
-                <article class="apartment">
-                    <header>
-                        <%= ap.title %>
-                    </header>
-                    <div><img src="<%= ap.mainPhoto %>" alt=""></div>
-                    <div>
-                        <%= ap.price %> € por noche
-                    </div>
-                    <footer>
-                        <% ap.services.forEach(service => { %>
-                         <% if (service.isPresent && service.id == 'wifi') { %>
-                            <i class="fa-solid fa-wifi"></i>
-                         <% } else if (service.isPresent && service.id == 'airConditioner') { %>
-                            <i class="fa-solid fa-temperature-low"></i>
-                        <% } else if (service.isPresent && service.id == 'kitchen') { %>
-                            <i class="fa-solid fa-utensils"></i>
-                        <% } else if (service.isPresent && service.id == 'disabilityAccess') { %>
-                            <i class="fa-brands fa-accessible-icon"></i>
-                        <% } else if (service.isPresent && service.id == 'heating') { %>
-                            <i class="fa-solid fa-fire-burner"></i>
-                        <% } else if (service.isPresent && service.id == 'tv') { %>
-                            <i class="fa-solid fa-tv"></i>
-                         <% } %>
-                        <% }) %>
-                    </footer>
-                </article>
-            </a>
+        <!-- Flash Messages -->
+        <% if (successMsg.length> 0) { %>
+            <div class="alert alert-success">
+                <%= successMsg %>
+            </div>
             <% } %>
-    </main>
+                <% if (errorMsg.length> 0) { %>
+                    <div class="alert alert-error">
+                        <%= errorMsg %>
+                    </div>
+                    <% } %>
+                        <!-- Paso 1 BUSCAR: Añadir un formulario para realizar la búsqueda por precio máximo. este <form> que valor tiene el atributo method? GET . Qué valor tendrá el atributo "action"? /search -->
+                        <form class="container" action="/search">
+                            <label for="maxPrice">Precio máximo por noche</label>
+                            <input type="number" name="maxPrice" id="maxPrice" min="0" max="1000000">
+                            <input type="submit" value="Filtrar">
+                        </form>
+
+                        <main class="center">
+                            <div class="container apartments">
+                                <% for (const ap of apartments) { %>
+                                    <a href="/apartment/<%= ap._id %>">
+                                        <article class="apartment">
+                                            <header>
+                                                <%= ap.title %>
+                                            </header>
+                                            <div><img src="<%= ap.mainPhoto %>" alt=""></div>
+                                            <div>
+                                                <%= ap.price %> € por noche
+                                            </div>
+                                            <footer>
+                                                <% ap.services.forEach(service=> { %>
+                                                    <% if (service.isPresent && service.id=='wifi' ) { %>
+                                                        <i class="fa-solid fa-wifi"></i>
+                                                        <% } else if (service.isPresent && service.id=='airConditioner'
+                                                            ) { %>
+                                                            <i class="fa-solid fa-temperature-low"></i>
+                                                            <% } else if (service.isPresent && service.id=='kitchen' ) {
+                                                                %>
+                                                                <i class="fa-solid fa-utensils"></i>
+                                                                <% } else if (service.isPresent &&
+                                                                    service.id=='disabilityAccess' ) { %>
+                                                                    <i class="fa-brands fa-accessible-icon"></i>
+                                                                    <% } else if (service.isPresent &&
+                                                                        service.id=='heating' ) { %>
+                                                                        <i class="fa-solid fa-fire-burner"></i>
+                                                                        <% } else if (service.isPresent &&
+                                                                            service.id=='tv' ) { %>
+                                                                            <i class="fa-solid fa-tv"></i>
+                                                                            <% } %>
+                                                                                <% }) %>
+                                            </footer>
+                                        </article>
+                                    </a>
+                                    <% } %>
+                            </div>
+                        </main>
 </body>
 
 </html>

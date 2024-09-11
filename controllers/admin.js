@@ -89,7 +89,8 @@ const postApartmentByIdEdit = async (req, res) => {
         isPublished: true
     })
     console.log('updated apartment: ', updatedApartment);
-    res.send('Apartment updated')
+    req.flash('success', 'Apartamento editado con éxito');
+    res.redirect('/');
 }
 
 const postUnpublishApartment = ('/apartments/:id/unpublish', async (req, res) => {

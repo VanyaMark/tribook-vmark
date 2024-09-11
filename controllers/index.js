@@ -26,15 +26,37 @@ const getApartments = async (req, res) => {
 }
 
 const getApartmentById = async (req, res) => {
-    // 1. Voy al modelo para obtener el apartamento dado su id
+    // 1. Fetch the apartment by its id
     const { idApartment } = req.params;
-
-    const selectedApartment = await Apartment.findById(idApartment);
+    console.log(idApartment)
     const errorMessage = '';
-    res.render('detail-apartment', {
-        selectedApartment,
-        errorMessage
-    });
+
+    try {
+        const selectedApartment = await Apartment.findById(idApartment);
+
+        // Async function to get reservations for the apartment
+        const getApartmentReservations = async (apartmentId) => {
+            const reservations = await Reservation.find({ apartment: apartmentId });
+            return reservations.map(reservation => ({
+                startDate: reservation.startDate,
+                endDate: reservation.endDate,
+            }));
+        };
+
+        // Await the result of getApartmentReservations
+        const reservations = await getApartmentReservations(idApartment);
+        console.log('reservations: ', reservations); // This will now show the resolved value
+
+        // Render the view with the apartment details and reservations
+        res.render('detail-apartment', {
+            selectedApartment,
+            reservations, // Pass reservations to the template if needed
+            errorMessage
+        });
+    } catch (error) {
+        console.error('Error fetching apartment or reservations:', error);
+        res.status(500).send('An error occurred while fetching the apartment details');
+    }
 };
 
 const searchApartments = async (req, res) => {
