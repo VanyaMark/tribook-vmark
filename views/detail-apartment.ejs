@@ -8,6 +8,7 @@
 
 <body>
     <%- include('./partials/navbar.ejs') %>
+
     <% if (errorMessage.length > 0) { %>
      <p class="error">><%= errorMessage %></p>
     <% } %>
@@ -67,10 +68,35 @@
                         <%= selectedApartment.bathrooms %>
                     </span>
                 </div>
+                <% if (isAdmin) { %>
+                <div class="apartment-detail-item">
+                    <span class="label">Publicado:</span>
+                    <span class="value">
+                        <%= selectedApartment.isPublished ? 'Sí' : 'No' %>
+                    </span>
+                </div>
+                <div class="apartment-detail-item">
+                    <% if (!selectedApartment.isPublished) { %>
+                        <span class="label">Fecha de baja:</span>
+                        <span class="value"><%= selectedApartment.unpublishedAt.toLocaleDateString() %>
+                    <% } %>
+                    </span>
+                </div>
+                <% } %>
             </div>
             <div class="reservation-form">
                 <% if (isAdmin) { %>
-                    <a href="/admin/apartment/<%= selectedApartment._id %>/edit/">Editar apartamento</a>
+                    <button><a href="/admin/apartment/<%= selectedApartment._id %>/edit/">Editar apartamento</a></button>
+                    <% if (selectedApartment.isPublished) { %>
+                        <form action="/admin/apartment/<%= selectedApartment._id %>/unpublish" method="POST">
+                            <button type="submit">Despublicar apartamento</button>
+                        </form>
+                    <% } else { %>
+                        <form action="/admin/apartment/<%= selectedApartment._id %>/publish" method="POST">
+                            <button type="submit">Publicar apartamento</button>
+                        </form>
+                    <% } %>
+             
                     <% } else { %>
                         <!-- Si no soy adminitrador. TODO: valorar si permitir al admin también hacer reservas -->
                         <!-- TODO 1. Crear los controles de formulario necesarios para realizar la reserva: EMAIL, FECHA DE INICIO, FECHA DE FIN. Este formulario debería realiar una petición de tipo POST a /apartment/new-reservation. ACORDAOS que hay que pasar el identificador del apartamento en un <input:hidden>. Cómo hacerlo? Mirad la vida new-apartment.ejs -->

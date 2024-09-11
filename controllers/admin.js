@@ -53,6 +53,7 @@ const postNewApartment = async (req, res) => {
         guests,
         mainPhoto,
         services: checkServices(services),
+        isPublished: true
     });
     res.send('Apartamaneto creado');
 }
@@ -85,17 +86,57 @@ const postApartmentByIdEdit = async (req, res) => {
         guests,
         mainPhoto,
         services: checkServices(services),
+        isPublished: true
     })
     console.log('updated apartment: ', updatedApartment);
     res.send('Apartment updated')
-
 }
+
+// const getDeactivateApartment = async (req, res) => {
+//     const { idApartment } = req.params;
+//     const selectedApartment = await Apartment.findById(idApartment)
+//     console.log('req', req.params)
+//     console.log(selectedApartment)
+//     res.render('apartment-edit', {
+//         selectedApartment
+//     })
+// }
+
+const postUnpublishApartment = ('/apartments/:id/unpublish', async (req, res) => {
+    try {
+    const { idApartment } = req.params;
+    const selectedApartment = await Apartment.findByIdAndUpdate(idApartment, {
+        isPublished: false,
+        unpublishedAt: new Date()
+    });
+    res.send('Successfully unpublished')
+} catch (error) {
+    console.log(error)
+    res.status(500).send('Error unpublishing apartment')
+}
+})
+
+const postPublishApartment = ('/apartments/:id/publish', async (req, res) => {
+    try {
+        const { idApartment } = req.params;
+        const selectedApartment = await Apartment.findByIdAndUpdate(idApartment, {
+            isPublished: true,
+            unpublishedAt: null
+        });
+        res.send('Successfully published')
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error publishing apartment')
+    }
+})
 
 // named exports (expotamos varios recursos, lo hacemos como un objeto)
 module.exports = {
     getNewApartmentForm,
     postNewApartment,
     getApartmentByIdEdit,
-    postApartmentByIdEdit
+    postApartmentByIdEdit,
+    postUnpublishApartment,
+    postPublishApartment
 }
 

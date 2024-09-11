@@ -16,4 +16,10 @@ router.post('/apartment/new-apartment', adminControllers.postNewApartment);
 router.get('/apartment/:idApartment/edit', adminControllers.getApartmentByIdEdit);
 router.post('/apartment/:idApartment/edit', adminControllers.postApartmentByIdEdit);
 
+//ruta para despublicar apartamento
+router.post('/apartment/:idApartment/unpublish', adminControllers.postUnpublishApartment)
+
+//ruta para publicar apartamento
+router.post('/apartment/:idApartment/publish', adminControllers.postPublishApartment)
+
 module.exports = router;

@@ -133,6 +133,10 @@ a:focus {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+.reservation-form a {
+    color: white;
+}
+
 /* Error Handling */
 .error {
     background-color: rgb(199, 121, 121);

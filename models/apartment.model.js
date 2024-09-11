@@ -45,6 +45,14 @@ const apartmentSchema = new Schema({
         min: 1,
         max: 10,
         required: true,
+    },
+    isPublished: {
+        type: Boolean,
+        default: true
+    },
+    unpublishedAt: {
+        type: Date,
+        default: null
     }
 },
 { 
