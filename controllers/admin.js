@@ -35,28 +35,30 @@ const getNewApartmentForm = (req, res) => {
 }
 
 const postNewApartment = async (req, res) => {
+    const { title, description, price, size, rooms, bathrooms, guests, mainPhoto, services } = req.body;
 
-    // Me han metido más servicios en el req.services que los servicios que yo quiero? kitchen, wifi, etc. res.status(400).send('Ha ocurrido un error');
-    //Create an array to hold the available services for the appartment
-    //const checkedServices = req.body.services;
-    const {title, description, price, size, rooms, bathrooms, guests, mainPhoto, services} = req.body;
+    try {
+        await Apartment.create({
+            title,
+            description,
+            price,
+            size,
+            rooms,
+            bathrooms,
+            guests,
+            mainPhoto,
+            services: checkServices(services),
+            isPublished: true
+        });
 
-
-
-    await Apartment.create({
-        title,
-        description,
-        price,
-        size,
-        rooms,
-        bathrooms,
-        guests,
-        mainPhoto,
-        services: checkServices(services),
-        isPublished: true
-    });
-    res.send('Apartamaneto creado');
-}
+        req.flash('success', 'Apartamento creado con éxito');
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error al crear el apartamento:', error);
+        req.flash('error', 'No se pudo crear el apartamento. Por favor, inténtelo de nuevo.');
+        res.redirect('/apartment/new-apartment'); // Redirige a la página del formulario con un mensaje de error
+    }
+};
 
 //Get route to edit appartment
 
