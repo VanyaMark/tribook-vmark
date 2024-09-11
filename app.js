@@ -1,52 +1,46 @@
-// importar módulos de terceros
+// Import third-party modules
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const path = require('path'); 
+const path = require('path');
 
 const dotenv = require('dotenv');
 dotenv.config();
 
-
-// importar las rutas públicas
+// Import public routes
 const indexRoutes = require('./routes/index.js');
 
-// importar las rutas de administrador
+// Import admin routes
 const adminRoutes = require('./routes/admin.js');
 
-// rutas de autentificación
+// Import authentication routes
 const authRoutes = require('./routes/auth.js');
 
-
-// creamos una instancia del servidor Express
+// Create an instance of the Express server
 const app = express();
 
-// Tenemos que usar un nuevo middleware para indicar a Express que queremos procesar peticiones de tipo POST
+// Middleware to parse URL-encoded bodies (necessary for processing POST requests)
 app.use(express.urlencoded({ extended: true }));
 
-// Configurar sesión
+// Configure session management
 app.use(session({
     secret: 'miSecretoSuperSecreto',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // secure: true en producción con HTTPS
+    cookie: { secure: false } // Set secure: true in production with HTTPS
 }));
 
-
+// Middleware to make req.session.isAuthenticated available to all views and backend routes
 app.use((req, res, next) => {
-    // Ensure that res.locals.isAdmin is set based on req.session.isAdmin
-    // req.session.isAdmin is set when the user is authenticated and is an admin
-    // By assigning this value to res.locals.isAdmin, we ensure it is accessible
-    // both in EJS views and other route handlers throughout the backend.
-    // Default to false if req.session.isAdmin is not set.
+    // req.session.isAuthenticated indicates if the user is authenticated
     res.locals.isAdmin = req.session.isAuthenticated;
 
     // Proceed to the next middleware or route handler
     next();
-})
+});
 
-// Añadimos el middleware necesario para que el client puedo hacer peticiones GET a los recursos públicos de la carpeta 'public'
+// Serve static files from the 'public' directory
 app.use(express.static('public'));
 
 // Serve static files from node_modules (for Vanilla Calendar)
@@ -54,25 +48,25 @@ app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 const PORT = process.env.PORT || 3000;
 
-// Especificar a Express que quiero usar EJS como motor de plantillas
+// Set EJS as the templating engine
 app.set('view engine', 'ejs');
 
-// Usamos el middleware morgan para loguear las peticiones del cliente
+// Use Morgan for logging client requests
 app.use(morgan('tiny'));
 
-// Añadimos las ritas de index.js en nuestra app
-// El primer parámetro significa que todas las rutas que se encuentren en 'indexRouter' estarán prefijados por '/'
-// Voy a prefijar todas las rutas de administrador con '/admin'
+// Add routes from index.js to the app
+// All routes in 'indexRoutes' will be prefixed with '/'
+// Admin routes will be prefixed with '/admin'
 
-// Middleware para proteger las rutas de administrador
+// Middleware to protect admin routes
 app.use('/admin', (req, res, next) => {
-    // Miramos si el usuario esta autentificado
+    // Check if the user is authenticated
     if (req.session.isAuthenticated) {
-        // Si es que si, establecemos que es de tipo administrador y permitimos que siga la petición
+        // If authenticated, set res.locals.isAdmin to true and proceed
         res.locals.isAdmin = true;
         next();
     } else {
-        // en caso contrario lo llevamos a la vista de login
+        // If not authenticated, redirect to the login page
         res.redirect('/login');
     }
 });
@@ -81,10 +75,13 @@ app.use('/admin', adminRoutes);
 app.use('/', authRoutes);
 app.use('/', indexRoutes);
 
+// Connect to the MongoDB database
 async function connectDB() {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Conectado a la base de datos');
+    console.log('Connected to the database');
 }
+
+
 
 connectDB().catch(err => console.log(err))
 
