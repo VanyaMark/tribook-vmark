@@ -35,11 +35,14 @@ app.use(session({
 
 
 app.use((req, res, next) => {
-    // La variable req.locals es una variable "global" de tipo objecto a la que todas las vistas pueden acceder
-    // Si el usuario esta autentificado entonces es que es de tipo administrador
+    // Ensure that res.locals.isAdmin is set based on req.session.isAdmin
+    // req.session.isAdmin is set when the user is authenticated and is an admin
+    // By assigning this value to res.locals.isAdmin, we ensure it is accessible
+    // both in EJS views and other route handlers throughout the backend.
+    // Default to false if req.session.isAdmin is not set.
     res.locals.isAdmin = req.session.isAuthenticated;
 
-    // tenemos que ejecutar next() para que la petición HTTP siga su curso
+    // Proceed to the next middleware or route handler
     next();
 })
 

@@ -5,13 +5,24 @@ const Apartment = require('../models/apartment.model.js');
 const Reservation = require('../models/reservation.model.js');
 
 const getApartments = async (req, res) => {
+    let apartments;
 
-    // Obtenemos todos los apartamentos de la base de datos
-    const apartments = await Apartment.find();
+    try {
+        const isAdmin = req.session.isAuthenticated || false;
 
-    res.render('home', {
-        apartments
-    });
+        if (isAdmin) {
+            apartments = await Apartment.find();
+        } else {
+            apartments = await Apartment.find({ isPublished: true });
+        }
+
+        res.render('home', {
+            apartments
+        });
+    } catch (error) {
+        console.error('Error fetching apartments:', error);
+        res.status(500).send('Server error');
+    }
 }
 
 const getApartmentById = async (req, res) => {
