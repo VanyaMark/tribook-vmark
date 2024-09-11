@@ -10,7 +10,17 @@
     <%- include('./partials/navbar.ejs') %>
     <h1>Home Page</h1>
 
-
+    <!-- Flash Messages -->
+     <% if (successMsg.length > 0) { %>
+        <div class="alert alert-success">
+            <%= successMsg %>
+        </div>
+        <% } %>
+    <% if (errorMsg.length > 0) { %>
+        <div class="alert alert-error">
+            <%= errorMsg %>
+        </div>
+        <% } %>
     <!-- Paso 1 BUSCAR: Añadir un formulario para realizar la búsqueda por precio máximo. este <form> que valor tiene el atributo method? GET . Qué valor tendrá el atributo "action"? /search -->
     <form class="container" action="/search">
         <label for="maxPrice">Precio máximo por noche</label>

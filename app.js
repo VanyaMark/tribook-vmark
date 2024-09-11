@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const path = require('path');
+const flash = require('connect-flash');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -31,10 +32,15 @@ app.use(session({
     cookie: { secure: false } // Set secure: true in production with HTTPS
 }));
 
+app.use(flash());
+
 // Middleware to make req.session.isAuthenticated available to all views and backend routes
 app.use((req, res, next) => {
     // req.session.isAuthenticated indicates if the user is authenticated
     res.locals.isAdmin = req.session.isAuthenticated;
+    //Middleware to make flash messages available in views
+    res.locals.successMsg = req.flash('success');
+    res.locals.errorMsg = req.flash('error');
 
     // Proceed to the next middleware or route handler
     next();

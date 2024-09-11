@@ -92,16 +92,6 @@ const postApartmentByIdEdit = async (req, res) => {
     res.send('Apartment updated')
 }
 
-// const getDeactivateApartment = async (req, res) => {
-//     const { idApartment } = req.params;
-//     const selectedApartment = await Apartment.findById(idApartment)
-//     console.log('req', req.params)
-//     console.log(selectedApartment)
-//     res.render('apartment-edit', {
-//         selectedApartment
-//     })
-// }
-
 const postUnpublishApartment = ('/apartments/:id/unpublish', async (req, res) => {
     try {
     const { idApartment } = req.params;
@@ -109,10 +99,13 @@ const postUnpublishApartment = ('/apartments/:id/unpublish', async (req, res) =>
         isPublished: false,
         unpublishedAt: new Date()
     });
-    res.send('Successfully unpublished')
+    req.flash('success', 'Apartamento despublicado con éxito');
+    res.redirect('/');
 } catch (error) {
     console.log(error)
-    res.status(500).send('Error unpublishing apartment')
+    // res.status(500).send('Error unpublishing apartment')
+    res.flash('error', 'Error despublicando apartamento');
+    res.redirect('/');
 }
 })
 
@@ -123,10 +116,13 @@ const postPublishApartment = ('/apartments/:id/publish', async (req, res) => {
             isPublished: true,
             unpublishedAt: null
         });
-        res.send('Successfully published')
+        req.flash('success', 'Apartamento publicado con éxito');
+        res.redirect('/');
     } catch (error) {
         console.log(error)
-        res.status(500).send('Error publishing apartment')
+        // res.status(500).send('Error publishing apartment')
+        res.flash('error', 'Error publicando apartamento');
+        res.redirect('/');
     }
 })
 
