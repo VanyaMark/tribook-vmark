@@ -25,6 +25,15 @@ const getApartments = async (req, res) => {
     }
 }
 
+        // Async function to get reservations for the apartment
+        const getApartmentReservations = async (apartmentId) => {
+            const reservations = await Reservation.find({ apartment: apartmentId });
+            return reservations.map(reservation => ({
+                startDate: reservation.startDate,
+                endDate: reservation.endDate,
+            }));
+        };
+
 const getApartmentById = async (req, res) => {
     // 1. Fetch the apartment by its id
     const { idApartment } = req.params;
@@ -34,14 +43,6 @@ const getApartmentById = async (req, res) => {
     try {
         const selectedApartment = await Apartment.findById(idApartment);
 
-        // Async function to get reservations for the apartment
-        const getApartmentReservations = async (apartmentId) => {
-            const reservations = await Reservation.find({ apartment: apartmentId });
-            return reservations.map(reservation => ({
-                startDate: reservation.startDate,
-                endDate: reservation.endDate,
-            }));
-        };
 
         // Await the result of getApartmentReservations
         const reservations = await getApartmentReservations(idApartment);
@@ -86,6 +87,17 @@ const postNewReservation = async (req, res) => {
             // Handle case where apartment is not found
             return res.status(404).json({ error: "Apartment not found" });
         }
+
+        // Await the result of getApartmentReservations
+        const reservations = await getApartmentReservations(idApartment);
+        console.log('reservations: ', reservations); // This will now show the resolved value
+
+        const conflictes = await Reservation.findOne({
+            apartment: idApartment,
+            $or: [
+              { startDate: { $lt: endDate }, endDate: { $gt: startDate } }
+            ]
+          });
 
         // 2B. Create the new reservation
         const newReservation = await Reservation.create({
