@@ -99,6 +99,11 @@ const postNewReservation = async (req, res) => {
             ]
           });
 
+          console.log('conflictes: ', conflictes)
+          if (conflictes) {
+            req.flash('error', 'Fechas de la reserva no disponibles');
+            res.redirect(`/apartment/${idApartment}`); // Redirige a la página del formulario con un mensaje de error
+          } else {
         // 2B. Create the new reservation
         const newReservation = await Reservation.create({
             email,
@@ -110,16 +115,17 @@ const postNewReservation = async (req, res) => {
         // 3. Render a reservation summary page
         return res.render('reservation-summary', {
             reservation: newReservation,
-            selectedApartment: apartment
+            selectedApartment: apartment,
+            errorMessage: req.flash('error'),
         });
         // return res.status(201).json({ message: "Reservation created", newReservation });
-        
+    }
     } catch (err) {
         // Catch and handle any errors that occur
         console.error(err);
-        let errorMessage = "Reserva no creada, por favor, añade datos válidos."
+        req.flash('error', "Reserva no creada, por favor, añade datos válidos.") 
         return res.render('detail-apartment', {
-            errorMessage,
+            errorMessage: req.flash('error'),
             selectedApartment: apartment
         })
         // return res.status(500).json({ error: "An error occurred while processing the reservation" });

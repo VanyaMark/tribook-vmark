@@ -107,7 +107,7 @@ const postUnpublishApartment = ('/apartments/:id/unpublish', async (req, res) =>
 } catch (error) {
     console.log(error)
     // res.status(500).send('Error unpublishing apartment')
-    res.flash('error', 'Error despublicando apartamento');
+    req.flash('error', 'Error despublicando apartamento');
     res.redirect('/');
 }
 })
@@ -124,7 +124,7 @@ const postPublishApartment = ('/apartments/:id/publish', async (req, res) => {
     } catch (error) {
         console.log(error)
         // res.status(500).send('Error publishing apartment')
-        res.flash('error', 'Error publicando apartamento');
+        req.flash('error', 'Error publicando apartamento');
         res.redirect('/');
     }
 })
