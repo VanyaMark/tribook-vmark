@@ -113,40 +113,10 @@
                             <input type="date" name="endDate" id="endDate">
                             <input type="submit" value="Reservar">
                         </form>
-                        <!-- Contenedor del calendario -->
-                        <div id="calendar"></div>
                         <% } %>
             </div>
         </div>
     </article>
-    <!-- Include Vanilla Calendar JS -->
-<script src="/static/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const reservedDates = <%- JSON.stringify(reservations) %>;
-
-        const disabledDates = reservedDates.map(reservation => ({
-            start: reservation.startDate,
-            end: reservation.endDate,
-        }));
-
-        console.log(disabledDates);  // You can now work with the reserved dates here
-        
-        // Now you can initialize your calendar with these dates
-        const options = {
-            settings: {
-                range: {
-                    min: disabledDates[0]?.start || null,  // Adjust these as needed
-                    max: disabledDates[disabledDates.length - 1]?.end || null,
-                    disabled: disabledDates.map(d => `${d.start}:${d.end}`)
-                },
-            },
-        };
-
-        const calendar = new VanillaCalendar('#calendar', options);
-        calendar.init();
-    });
-</script>
 
 </body>
 
