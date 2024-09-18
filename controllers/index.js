@@ -49,14 +49,17 @@ const getApartmentById = async (req, res) => {
         console.log('reservations: ', reservations); // This will now show the resolved value
 
         // Render the view with the apartment details and reservations
-        res.render('detail-apartment', {
+       return res.render('detail-apartment', {
             selectedApartment,
-            reservations, // Pass reservations to the template if needed
-            errorMessage
+            reservations: reservations.map(reservation => ({
+                startDate: res.startDate.toISOString().split('T')[0],
+                endDate: res.endDate.toISOString().split('T')[0],
+            })), // Pass reservations to the template if needed
+            errorMsg: req.flash('error')
         });
     } catch (error) {
-        console.error('Error fetching apartment or reservations:', error);
-        res.status(500).send('An error occurred while fetching the apartment details');
+        req.flash('error', "No se pudo cargar el apartamento.");
+        return res.redirect('/apartments');
     }
 };
 
