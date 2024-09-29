@@ -8,6 +8,18 @@
 </head>
 
 <body>
+  <%- include('./partials/navbar.ejs') %>
+  <!-- Flash Messages -->
+  <% if (successMsg.length> 0) { %>
+    <div class="alert alert-success">
+        <%= successMsg %>
+    </div>
+    <% } %>
+        <% if (errorMsg.length> 0) { %>
+            <div class="alert alert-error">
+                <%= errorMsg %>
+            </div>
+            <% } %>
 
   <div class="container">
 

@@ -3,12 +3,13 @@
 
 <head>
     <%- include('./partials/head') %>
-    <title>Document</title>
+    <title>Editar Apartamento</title>
 
 </head>
 
 <body>
-    <h1>Edit Apartment</h1>
+    <%- include('./partials/navbar.ejs') %>
+    <h1>Editar Apartamento</h1>
     <main class="container">
         <form action="/admin/apartment/<%= selectedApartment._id %>/edit" method="POST">
             <label for="title">Título</label>

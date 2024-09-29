@@ -32,7 +32,12 @@ const postSignup = async (req, res) => {
         // Check if email already exists
         const emailExists = await checkIfEmailExists(email);
         if (emailExists) {
-            return res.status(400).json({ message: 'Email is already in use.' });
+
+            req.flash(
+                "error",
+                "Este email ya existe."
+              );
+            return res.redirect('/signup');
         }
 
         // Hash the password before saving the user
@@ -46,7 +51,8 @@ const postSignup = async (req, res) => {
         });
 
         await newUser.save();
-        //res.status(201).json({ message: 'User registered successfully!' });
+        
+        req.flash("success", "Usuario creado con éxito");
         return res.redirect('/login');
     } catch (err) {
         console.error('Error during signup:', err); // Log the error for debugging

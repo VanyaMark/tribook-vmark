@@ -8,7 +8,18 @@
 </head>
 
 <body>
-
+  <%- include('./partials/navbar.ejs') %>
+          <!-- Flash Messages -->
+          <% if (successMsg.length> 0) { %>
+            <div class="alert alert-success">
+                <%= successMsg %>
+            </div>
+            <% } %>
+                <% if (errorMsg.length> 0) { %>
+                    <div class="alert alert-error">
+                        <%= errorMsg %>
+                    </div>
+                    <% } %>
   <div class="container">
 
     <h2>Registrarse</h2>
@@ -20,7 +31,7 @@
 
       <label>Contraseña:</label>
       <input  type="password" name="password" placeholder="********" required/>
-      <p>La contraseña debe tener mínimo 8 símbolos, 1 letra en mayúscula, 1 en minúscula, 1 número y 1 símbolo especial</p>
+      <p>La contraseña debe tener mínimo 8 símbolos, 1 letra en mayúscula, 1 en minúscula, 1 número</p>
       <button type="submit">Registro</button>
     </form>
   </div>
