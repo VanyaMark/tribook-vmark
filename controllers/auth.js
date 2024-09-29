@@ -47,17 +47,17 @@ const postSignup = async (req, res) => {
 
         await newUser.save();
         //res.status(201).json({ message: 'User registered successfully!' });
-        res.redirect('/login');
+        return res.redirect('/login');
     } catch (err) {
         console.error('Error during signup:', err); // Log the error for debugging
-        res.status(500).json({ error: 'Server error during registration' });
+        return res.status(500).json({ error: 'Server error during registration' });
     }
 };
 
 // LOGIN
 // Render the login form
 const getLoginForm = (req, res) => {
-    res.render('login');
+    return res.render('login');
 };
 
 // Handle user login
@@ -86,10 +86,10 @@ const postLoginForm = async (req, res) => {
         res.locals.isAdmin = true;
 
         // Redirect the user after successful login
-        res.redirect('/');
+        return res.redirect('/');
     } catch (error) {
         console.error('Error during login:', error); // Log the error for debugging
-        res.status(500).json({ message: 'Server error during login.' });
+        return res.status(500).json({ message: 'Server error during login.' });
     }
 };
 
@@ -101,7 +101,7 @@ const logout = (req, res) => {
             return res.send('Error logging out');
         }
         // Redirect to homepage after logout
-        res.redirect('/');
+        return res.redirect('/');
     });
 };
 
