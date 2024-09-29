@@ -1,27 +1,29 @@
-/** Crear un conjunto de funciones que van a dar respuesta a nuestras rutas  */
-
-// Importamos el modelo
+// Import the Apartment and Reservation models
 const Apartment = require('../models/apartment.model.js');
 const Reservation = require('../models/reservation.model.js');
 
+// Fetch and render a list of apartments
 const getApartments = async (req, res) => {
     let apartments;
 
     try {
+                // Check if the user is an admin based on session authentication
         const isAdmin = req.session.isAuthenticated || false;
 
+                // Admins can see all apartments, while non-admin users can only see published apartments
         if (isAdmin) {
-            apartments = await Apartment.find();
+            apartments = await Apartment.find(); // Fetch all apartments
         } else {
-            apartments = await Apartment.find({ isPublished: true });
+            apartments = await Apartment.find({ isPublished: true }); // Fetch only published apartments
         }
 
-        res.render('home', {
+                // Render the homepage with the list of apartments
+        return res.render('home', {
             apartments
         });
     } catch (error) {
         console.error('Error fetching apartments:', error);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
     }
 }
 
@@ -34,77 +36,81 @@ const getApartments = async (req, res) => {
             }));
         };
 
+        // Fetch and render details of a specific apartment by its ID
 const getApartmentById = async (req, res) => {
-    // 1. Fetch the apartment by its id
+    // Extract apartment ID from the request parameters
     const { idApartment } = req.params;
     console.log(idApartment)
     const errorMessage = '';
 
     try {
+              // Fetch the apartment from the database
         const selectedApartment = await Apartment.findById(idApartment);
 
 
-        // Await the result of getApartmentReservations
+        // Fetch reservations related to the apartment
         const reservations = await getApartmentReservations(idApartment);
         console.log('reservations: ', reservations); // This will now show the resolved value
 
-        // Render the view with the apartment details and reservations
-        res.render('detail-apartment', {
+     // Render the apartment details page with apartment info and reservations
+       return res.render('detail-apartment', {
             selectedApartment,
             reservations, // Pass reservations to the template if needed
             errorMessage
         });
     } catch (error) {
         console.error('Error fetching apartment or reservations:', error);
-        res.status(500).send('An error occurred while fetching the apartment details');
+        return res.status(500).send('An error occurred while fetching the apartment details');
     }
 };
 
+// Search for apartments by price and render the results
 const searchApartments = async (req, res) => {
 
-    // PAso 3 buscar apartamentos. Parsear la query string que recibo del formulario
+// Extract max price from query string
     const { maxPrice } = req.query;
 
-    // Obtener del modelo todos los apartamentos cuyo precio sea menor que el precio maximo que el usuairo está dispuesto a pagar
-
-    // Pasarle estos apartamentos ya filtrados a la vista
+    // Fetch apartments whose price is less than or equal to the maximum price provided by the user
     const apartments = await Apartment.find({ price: { $lte: maxPrice } });
+
+        // Render the homepage with the filtered list of apartments
     res.render('home', {
         apartments
     });
 }
 
+// Handle the creation of a new reservation
 const postNewReservation = async (req, res) => {
     let apartment;
     try {
-        // 1. Destructure the req.body to get all reservation details
+        // Extract reservation details from the request body
         const { email, startDate, endDate, idApartment } = req.body;
 
-        // 2A. Retrieve the apartment from the collection using the given id
+        // Find the apartment by its ID
         apartment = await Apartment.findById(idApartment);
-        
+                // If apartment is not found, return a 404 error
         if (!apartment) {
-            // Handle case where apartment is not found
             return res.status(404).json({ error: "Apartment not found" });
         }
 
-        // Await the result of getApartmentReservations
+        // Check for conflicting reservations on the same apartment
         const reservations = await getApartmentReservations(idApartment);
         console.log('reservations: ', reservations); // This will now show the resolved value
 
         const conflictes = await Reservation.findOne({
             apartment: idApartment,
             $or: [
-              { startDate: { $lt: endDate }, endDate: { $gt: startDate } }
+              { startDate: { $lt: endDate }, endDate: { $gt: startDate } } // Check if dates overlap
             ]
           });
-
           console.log('conflictes: ', conflictes)
+
+          // If there is a conflict, flash an error message and redirect to the apartment details page
           if (conflictes) {
             req.flash('error', 'Fechas de la reserva no disponibles');
-          return  res.redirect(`/apartment/${idApartment}`); // Redirige a la página del formulario con un mensaje de error
+          return  res.redirect(`/apartment/${idApartment}`); // Return to the form page with error message
           } else {
-        // 2B. Create the new reservation
+        // Create the new reservation
         const newReservation = await Reservation.create({
             email,
             startDate,
@@ -112,23 +118,21 @@ const postNewReservation = async (req, res) => {
             apartment
         });
 
-        // 3. Render a reservation summary page
+         // Render a reservation summary page after successful booking
         return res.render('reservation-summary', {
             reservation: newReservation,
             selectedApartment: apartment,
             errorMessage: req.flash('error'),
         });
-        // return res.status(201).json({ message: "Reservation created", newReservation });
     }
     } catch (err) {
-        // Catch and handle any errors that occur
+        // Handle any errors that occur during the reservation process
         console.error(err);
         req.flash('error', "Reserva no creada, por favor, añade datos válidos.") 
         return res.render('detail-apartment', {
             errorMsg: req.flash('error'),
             selectedApartment: apartment
         })
-        // return res.status(500).json({ error: "An error occurred while processing the reservation" });
     }
 };
 
