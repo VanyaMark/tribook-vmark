@@ -1,25 +1,26 @@
-// Rutas de administrador
-
-// Rutas "públicas" de la app
+// Admin routes for managing apartments
 const express = require('express');
 const router = express.Router();
 
-// importar todos los controladores de controllers/admin.js
-
-// Crear primer endpoint de administrador que es el que nos permite mostrar un formulario para añadir un nuevo apartamento
+// Import all controllers from controllers/admin.js
 const adminControllers = require('../controllers/admin.js');
 
+// Route to display the form for adding a new apartment (GET request)
 router.get('/apartment/new-apartment', adminControllers.getNewApartmentForm);
+
+// Route to handle the form submission for adding a new apartment (POST request)
 router.post('/apartment/new-apartment', adminControllers.postNewApartment);
 
-// ruta dinámica para editar apartamento
+// Dynamic route to display the form for editing an existing apartment (GET request)
 router.get('/apartment/:idApartment/edit', adminControllers.getApartmentByIdEdit);
+
+// Route to handle the form submission for editing a specific apartment (POST request)
 router.post('/apartment/:idApartment/edit', adminControllers.postApartmentByIdEdit);
 
-//ruta para despublicar apartamento
+// Route to unpublish an apartment (POST request)
 router.post('/apartment/:idApartment/unpublish', adminControllers.postUnpublishApartment)
 
-//ruta para publicar apartamento
+// Route to publish an apartment (POST request)
 router.post('/apartment/:idApartment/publish', adminControllers.postPublishApartment)
 
 module.exports = router;
