@@ -14,6 +14,12 @@ nav {
     padding: 5px 5px;
 }
 
+.logo {
+    width: 150px;
+    height: auto;
+    margin-left: 2rem;
+}
+
 .button-logout {
     color: white;
 }
@@ -21,6 +27,10 @@ nav {
 .buttons-login-signup {
     display: flex;
     gap: 1rem;
+}
+
+h1 {
+    margin: 0.5rem 0 0.5rem 1.5rem;
 }
 
 .apartments {
