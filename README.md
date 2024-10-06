@@ -5,6 +5,10 @@
 
 **Tribook** is a web application designed for managing and booking apartments. The app offers both public and admin routes, with session-based authentication for admin users. The core functionality includes viewing apartments, searching for listings, making reservations, and for admins, publishing, unpublishing, and editing apartment listings.
 
+**Video Presentation** : https://vimeo.com/user60556610
+
+![App screenshot](./public/Tribook-screenshot.png)
+
 ## Features
 
 - **Public User Routes**:
